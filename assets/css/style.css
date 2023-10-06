@@ -18,3 +18,20 @@ h2 {
     margin-left: 10px; 
 }
 
+.forecast {
+    margin-top: 20px;
+    margin-right: 600px;
+    margin-left: 20px;
+}
+
+h4 {
+    position: relative;
+    justify-content: flex-start;
+    padding: 5px;
+    border: solid navy;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+

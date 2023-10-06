@@ -5,6 +5,7 @@ var searchButton = document.getElementById("searchButton");
 var currentForecastEl = document.getElementById("currentForecast");
 var fiveDayEl = document.getElementById("fiveDay");
 var cityInputEl = document.getElementById("cityInput");
+var previousCity = JSON.parse(localStorage.getItem ("cityInput"))|| []; 
 
 function getCity(city) {
   var cityUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + forecastKey;
@@ -27,6 +28,7 @@ function fiveDay(lat, lon) {
   })
     .then(function (data) {
       console.log(data)
+      fiveDayEl.innerHTML="";
       for (let i = 0; i < data.list.length; i += 8) {
         const day = data.list[i];
         var temp = document.createElement("p")
@@ -50,6 +52,7 @@ function getCurrent(lat, lon) {
   })
     .then(function (data) {
       console.log(data)
+      currentForecastEl.innerHTML="";
       var temp = document.createElement("p")
       var humidity = document.createElement("p")
       var windspeed = document.createElement("p")
@@ -66,24 +69,32 @@ searchButton.addEventListener('click', function (event) {
   event.preventDefault();
   var cityInputEl = document.getElementById("cityInput");
   getCity(cityInputEl.value)
-  localStorage.setItem ("cityInputEl") = 
-  console.log (cityInputEl)
+  previousCity.push (cityInputEl.value)
+  localStorage.setItem("cityInput",JSON.stringify(previousCity) );
+  var a = document.createElement("a");
+  a.textContent = cityInputEl.value;
+  a.setAttribute("href", "#");
+  a.classList.add ("dropdown-item")
+  dropdown.appendChild(a);
 })
 
-function previousCity(){
-  var cityHistory = localStorage.getItem ("cityInputEl")
- }
+var cities = [];
 
-//  saveButton.addEventListener("click", function(event) {
-//   event.preventDefault();
+function setPreviousCity() {
+  // previousCity.innerHTML = "";
+
+  for (var i = 0; i < previousCity.length; i++) {
   
-  // var studentGrade = {
-  //   student: student.value,
-  //   grade: grade.value,
-  //   comment: comment.value.trim()
-  // };
-  
-  // localStorage.setItem("studentGrade", JSON.stringify(studentGrade));
-  // renderMessage();
-  
-//   });
+    var a = document.createElement("a");
+    a.textContent = previousCity[i];
+    a.setAttribute("href", "#");
+    a.classList.add ("dropdown-item")
+    dropdown.appendChild(a);
+  }
+}
+setPreviousCity ()
+
+dropdown.addEventListener ("click", function (event) {
+  var city = event.target.textContent
+  getCity (city)
+})
