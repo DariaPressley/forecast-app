@@ -8,7 +8,7 @@ var cityInputEl = document.getElementById("cityInput");
 var previousCity = JSON.parse(localStorage.getItem ("cityInput"))|| []; 
 
 function getCity(city) {
-  var cityUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + forecastKey;
+  var cityUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + forecastKey;
   fetch(cityUrl).then(function (response) {
     console.log(response);
     return response.json();
